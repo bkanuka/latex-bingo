@@ -1,5 +1,13 @@
 #!/bin/bash
 
+## text file which contains bingo squares
+input_text=squares
+
+## latex code for center square
+center_square='\includegraphics[width=0.9\textwidth]{center.png}'
+#center_square=FREE
+
+
 node=( AA AB AC AD AE BA BB BC BD BE CA CB CD CE DA DB DC DD DE EA EB EC ED EE )
 
 cat > bingo.tex << EOF
@@ -29,7 +37,7 @@ EOF
 i=0
 OLDIFS=$IFS
 IFS=$'\n'
-for line in $(sort -R squares | head -n 24)
+for line in $(sort -R $input_text | head -n 24)
 do
     echo "\newcommand{\Node${node[i]}}{$line}%" >> bingo.tex
     (( i++ ))
@@ -37,7 +45,7 @@ done
 IFS=$OLDIFS
 
 
-echo "\newcommand{\NodeCC}{\includegraphics[width=0.9\textwidth]{marwan.png}}%" >> bingo.tex
+echo "\newcommand{\NodeCC}{$center_square}%" >> bingo.tex
 
 cat >> bingo.tex << EOF
 \pagestyle{empty}
